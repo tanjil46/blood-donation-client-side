@@ -1,12 +1,37 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+
 
 import { FaGoogle } from "react-icons/fa6";
+import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
 const Login = () => {
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit,reset } = useForm()
+    const{userLogIn}=useAuth()
 
-    const onSubmit=async(data)=>{}
+    const onSubmit=async(data)=>{
+     const email=data.email
+     const password=data.password
+     console.log(email,password)
+     userLogIn(email,password)
+     .then((result)=>{
+      console.log(result.user)
+      reset()
+      Swal.fire(
+        'success',
+        'Succesfully Log In',
+        'success'
+      )
+     })
+     .catch(error=>{
+      console.log(error.message)
+      Swal.fire(
+        'error',
+        `${error.message}`,
+        'error'
+      )
+     })
+    }
 
 
 
@@ -37,7 +62,7 @@ const Login = () => {
 
     <div className="flex flex-col p-4 space-y-3">
    <span className="label-text font-bold text-slate-900">Password</span>
-   <input type="password" {...register('name',{required:true})} placeholder="Password"  className="input input-bordered input-sm w-full max-w-xs " required/>
+   <input type="password" {...register('password',{required:true})} placeholder="Password"  className="input input-bordered input-sm w-full max-w-xs " required/>
 
  <div className="">
  <label className="label">

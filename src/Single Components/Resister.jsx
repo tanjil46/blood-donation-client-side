@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
+import Swal from "sweetalert2";
 
 
 const bbImage_hosting_key='6d2bae620663c80614c87636edfc98c3';
 const bbImage_hosting_api=`https://api.imgbb.com/1/upload?key=${bbImage_hosting_key} `
 const Resister = () => {
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit,reset } = useForm()
     const {createUser,userProfile}=useAuth()
     const axiosPublic=useAxios()
 
@@ -29,6 +30,33 @@ const Resister = () => {
      const userInfo={name,email,image}
      console.log(userInfo)
      
+    if(password.length<6){
+      return Swal.fire(
+          'Warning!',
+          'Your Password Must be  Minimum Six characters',
+          'warning'
+      ) 
+      }
+      else if(!/[A-Z]/.test(password)){
+          return Swal.fire(
+              'Warning!',
+              'There Must Be a Capital latter',
+              'warning'
+          )
+  
+    
+      }
+      else if(!/[@$!%*?&]/.test(password)){
+          return Swal.fire(
+              'Warning!',
+              'There Must Be a Special latter',
+              'warning'
+          )
+  
+          
+  
+  
+      }
   
    createUser(email,password)
    .then(()=>{
@@ -39,6 +67,14 @@ const Resister = () => {
     axiosPublic.post('/users',userInfo)
     .then(response=>{
       console.log(response.data)
+      if(response.data.insertedId){
+        reset()
+        Swal.fire(
+          'success',
+          'Succesfully Resistered',
+          'success'
+        )
+      }
     })
   
    })

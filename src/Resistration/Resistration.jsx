@@ -1,30 +1,47 @@
 
 
 import { useForm } from 'react-hook-form';
-import backImage from '../img/istockphoto-1248542684-612x612.jpg'
+
 import './Resitration.css'
+import useAxios from '../Hooks/useAxios';
+import Swal from 'sweetalert2';
+import useAuth from '../Hooks/useAuth';
    const Resistration = () => {
-    const { register, handleSubmit} = useForm()
-
-
+    const { register, handleSubmit,reset} = useForm()
+    const axiosPublic=useAxios()
+    const{user}=useAuth()
 
 
      const onSubmit=async(data)=>{
 
        const email=data.email
        const name=data.name
-       const image=data.image
+      
        const bloodGroup=data.group
        const distric=data.distric
        const upzila=data.upzila
       const status='active'
 
-        const resistrationInfo={email,name,image,bloodGroup,distric,upzila,status}
+        const resistrationInfo={email,name,bloodGroup,distric,upzila,status}
 
 
 
        console.log(resistrationInfo)
-
+        
+       axiosPublic.post('/resistration',resistrationInfo)
+       .then(res=>{
+        console.log(res.data)
+        if(res.data.insertedId){
+          reset()
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Resistration Created Succesfully",
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+       })
 
 
 
@@ -39,7 +56,8 @@ import './Resitration.css'
      }
 
     return (
-        <div className='bg-set max-w-6xl mx-auto bg-gradient-to-t from-pink-400 via-purple-400 to-yellow-400 my-6' >
+        <div className='bg-set max-w-6xl mx-auto  my-6' >
+          
             <form className="p-12" onSubmit={handleSubmit(onSubmit)}>
       
 
@@ -54,7 +72,7 @@ import './Resitration.css'
     <span className="label-text">Email*</span>
    
   </label>
-  <input {...register('email',{required:true})} type="text" placeholder=" email" className="input  input-bordered input-primary w-full " />
+  <input {...register('email',{required:true})} defaultValue={user?.email} type="text" placeholder=" email" className="input  input-bordered input-primary w-full " />
   
 </div>
 
@@ -66,7 +84,7 @@ import './Resitration.css'
     <span className="label-text">Name*</span>
    
   </label>
-  <input {...register('name',{required:true})} type="text" placeholder="name" className="input  input-bordered input-primary w-full " />
+  <input {...register('name',{required:true})} defaultValue={user?.displayName} type="text" placeholder="name" className="input  input-bordered input-primary w-full " />
   
 </div>
 
@@ -88,20 +106,6 @@ import './Resitration.css'
 
 
 
-
-<div className="my-6 mx-auto ">
-
-<label className="label">
-    <span className="label-text">Avatar*</span>
-   
-  </label>
-
-
-
-<input type="file" {...register('image',{required:true} )} className="file-input file-input-bordered w-full max-w-xs" />
-
-
-</div>
 
 
 
@@ -205,7 +209,7 @@ import './Resitration.css'
 
 
 
-<button className="btn bg-slate-500 " type="submit">Add Post</button>
+<button className="btn bg-slate-500 text-white hover:bg-black" type="submit">Resistration</button>
 
 
 </div>

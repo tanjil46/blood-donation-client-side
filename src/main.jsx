@@ -12,6 +12,9 @@ import Resistration from './Resistration/Resistration';
 import Resister from './Single Components/Resister';
 import Login from './Single Components/Login';
 import Authprovider from './Single Components/Authprovider';
+import Dashboard from './Dashboard/Dashboard';
+import Createdonation from './Dashboard/Userdashboard/Createdonation';
+
 
 
 
@@ -45,6 +48,20 @@ const router=createBrowserRouter([
       path:'/login',
       element:<Login></Login>
     }
+  ]
+},
+{
+  path:'dashboard',
+  element:<Dashboard></Dashboard>,
+  children:[
+ {
+  path:'create',
+  element:<Createdonation></Createdonation>
+ }
+
+
+
+
   ]
 }
 
