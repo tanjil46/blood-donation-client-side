@@ -7,7 +7,7 @@ import logo from '../img/blood-donation.jpg'
 const Dashboard = () => {
     return (
         <div className="flex">
-           <div className="w-32 bg-slate-400 h-screen">
+           <div className="w-32 bg-slate-400 min-h-screen">
                <img className="" src={logo}></img>
                <div className="my-4 menu space-y-10 ">
                 <Link className="mx-auto"><CgProfile className=" text-3xl text-white"></CgProfile></Link>
@@ -19,7 +19,7 @@ const Dashboard = () => {
                 <Link to='/' className=''><FaHome className="text-3xl mx-auto "></FaHome></Link>
                </div>
            </div>
-           <div className="max-w-5xl mx-auto">
+           <div className="max-w-6xl mx-auto">
            <Outlet></Outlet>
            </div>
           

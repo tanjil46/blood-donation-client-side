@@ -14,6 +14,9 @@ import Login from './Single Components/Login';
 import Authprovider from './Single Components/Authprovider';
 import Dashboard from './Dashboard/Dashboard';
 import Createdonation from './Dashboard/Userdashboard/Createdonation';
+import Bloodrequest from './Request page/Bloodrequest';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Detailsrequest from './Request page/Detailsrequest';
 
 
 
@@ -25,6 +28,7 @@ import Createdonation from './Dashboard/Userdashboard/Createdonation';
 
 
 
+const queryClient = new QueryClient()
 const router=createBrowserRouter([
 
  
@@ -47,6 +51,14 @@ const router=createBrowserRouter([
     {
       path:'/login',
       element:<Login></Login>
+    },
+    {
+      path:'/request',
+      element:<Bloodrequest></Bloodrequest>
+    },
+    {
+      path:'/details/:id',
+      element:<Detailsrequest></Detailsrequest>
     }
   ]
 },
@@ -83,13 +95,15 @@ const router=createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
    <Authprovider>
-    
+    <QueryClientProvider client={queryClient}>
+      
    <div className="max-w-8xl min-h-screen mx-auto bg-slate-600 " 
     >
    
     <RouterProvider router={router}></RouterProvider>
     
     </div>
+    </QueryClientProvider>
    </Authprovider>
 
   </React.StrictMode>,

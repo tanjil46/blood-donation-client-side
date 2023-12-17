@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa6";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import GoogleLogin from "./GoogleLogin";
 const Login = () => {
 
     const { register, handleSubmit,reset } = useForm()
@@ -87,7 +88,7 @@ const Login = () => {
 
      <div className="text-center my-3">
       <p className="font-bold text-slate-500  text-center">Or Login with</p>
-         <button className="btn bg-yellow-500 "><FaGoogle className="text-2xl"></FaGoogle></button>
+      <GoogleLogin></GoogleLogin>
 
      </div>
 
